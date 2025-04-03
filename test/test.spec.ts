@@ -45,6 +45,7 @@ describe('A suite with some shared setup', function () {
   it('should do something', () => {
     expect(true).toBe(true);
   });
+
   describe('A spec', function () {
     beforeEach(function () {
       this.foo = 0;
@@ -58,6 +59,20 @@ describe('A suite with some shared setup', function () {
     it('prevent test pollution by having an empty `this` created for the next spec', function () {
       expect(this.foo).toEqual(0);
       expect(this.bar).toBe(undefined);
+    });
+  });
+
+  describe('A spec using the fail function', function () {
+    function foo(x, callback) {
+      if (x) {
+        callback();
+      }
+    }
+
+    it('should not call the callBack', function () {
+      foo(false, function () {
+        fail('Callback has been called');
+      });
     });
   });
 });
