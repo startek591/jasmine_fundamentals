@@ -22,3 +22,27 @@ describe("The 'toBe' matcher compares with ===", function () {
     expect(false).not.toBe(true);
   });
 });
+
+describe('A suite with some shared setup', function () {
+  let foo = 0;
+
+  beforeEach(function () {
+    foo += 1;
+  });
+
+  afterEach(function () {
+    foo = 0;
+  });
+
+  beforeAll(function () {
+    foo = 1;
+  });
+
+  afterAll(function () {
+    foo = 0;
+  });
+
+  it('should do something', () => {
+    expect(true).toBe(true);
+  });
+});
