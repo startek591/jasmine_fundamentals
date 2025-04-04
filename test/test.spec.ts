@@ -131,3 +131,56 @@ describe('A suite with some shared setup', function () {
     });
   });
 });
+
+describe('Async/Await Example', () => {
+  async function fetchData() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve('data received');
+      }, 100);
+    });
+  }
+
+  it('should resolve data using async/await', async () => {
+    const data = await fetchData();
+    expect(data).toBe('data received');
+  });
+
+  it('should handle rejection with try/catch', async () => {
+    async function fetchWithError() {
+      return new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error('fail'));
+        }, 100);
+      });
+    }
+    try {
+      await fetchWithError();
+      fail('Expected an error to be thrown');
+    } catch (error) {
+      expect(error.message).toBe('fail');
+    }
+  });
+});
+
+describe('long asynchronous specs', function () {
+  function somethingSlow() {
+    return console.log('\ncall somethingSlow');
+  }
+
+  function somethingReallySlow() {
+    return console.log('call somethingReallySlow');
+  }
+
+  beforeEach(async function () {
+    await somethingSlow();
+  }, 1000);
+
+  it('takes a long time', async function () {
+    await somethingReallySlow();
+  }, 10000);
+
+  afterEach(async function () {
+    await somethingSlow();
+  }, 1000);
+});
