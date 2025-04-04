@@ -378,4 +378,16 @@ describe('Matching with finesse', function () {
       });
     });
   });
+  describe('custom asymmetry', function () {
+    const tester = {
+      asymmetricMatch: function (actual) {
+        const secondValue = actual.split(',')[1];
+        return secondValue === 'bar';
+      },
+    };
+
+    it('dives in deep', function () {
+      expect('foo,bar,baz,quux').toEqual(tester);
+    });
+  });
 });
