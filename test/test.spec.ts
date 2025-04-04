@@ -104,4 +104,30 @@ describe('A suite with some shared setup', function () {
       });
     });
   });
+
+  xdescribe('A spec 3', function () {
+    let foo;
+
+    beforeEach(function () {
+      foo = 0;
+      foo += 1;
+    });
+
+    it('is just a function so it can contain any code', function () {
+      expect(foo).toEqual(1);
+    });
+  });
+
+  describe('Pending spec', function () {
+    xit("can be declared 'xit'", function () {
+      expect(true).toBe(false);
+    });
+
+    it("can de declared with 'it' but without a function");
+
+    it("can be declared by calling 'pending' in the spec body", function () {
+      expect(true).toBe(true);
+      pending('this is why it is pending');
+    });
+  });
 });
